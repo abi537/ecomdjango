@@ -1,0 +1,45 @@
+{% load static%}
+{% load getstatus %}
+<div class="small-container cart-page">
+    {% if orders %}
+    {% if messages %}
+                
+                    {% for messages in messages%}
+                    <h3 class="{{messages.tags}}"><br>
+                    {{messages}}
+                    {% endfor %}
+
+                </h3>
+                  
+                {% endif %}
+
+    
+    <table>
+        <tbody><tr>
+            <th>OrderId</th>
+            <th>Date</th>
+            <th>Total Price</th>
+            <th>Status</th>
+        </tr>
+        
+        <tr>
+            {% for order in orders %}
+            <td> 
+                {{order.id}}
+            </td>
+            <td> {{order.created_at}}
+                
+            </td><td> 
+                {{order.Total_price}}
+            </td><td> 
+                {% getstatus order.order_status %}
+            </td>
+            
+        </tr>
+        {% endfor %}   
+      
+    </tbody></table>
+ {% else %}
+ <p>No orderss Available</p>
+ {% endif %}   
+</div>

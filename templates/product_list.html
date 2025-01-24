@@ -1,0 +1,63 @@
+{% load static %}
+{% load chunks%}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="small-container">
+    <div class="row row-2">
+        <h2>All Products</h2>
+        <select>
+            <option>Default Sort</option>
+            <option>Sort By Price</option>
+            <option>Sort By Popularity</option>
+            <option>Sort By Rating</option>
+            <option>Sort By Sale</option>
+        </select>
+    </div>
+    {% for product_chunks in product|chunk:4 %}
+    <div class="row">
+        {% for product in product_chunks %}
+        <div class="col-4">
+            <a href="{% url 'detail_product' product.id %}"><img src="{{product.images.url}}"></a>
+            <h4>{{product.title}}</h4>
+            <div class="rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>                
+                <i class="fa fa-star-o"></i>
+            </div>
+            <p>{{product.price}}</p>
+        </div>
+        {% endfor %}
+    </div>
+        
+    {% endfor %}
+
+     
+    <div class="page-btn">
+        {% if product.has_previous %}
+        <a href="?pages={{product.previous_page_number}}"><span><-</span></a>
+        {% endif %}
+        {% for i in product.paginator.page_range %}
+
+        <a href="?pages={{i}}"><span>{{i}}</span></a>
+        {% endfor %} 
+        {% if product.has_next %}
+        <a href="?pages={{product.next_page_number}}"><span>-></span></a>
+        {% endif %} 
+     </div>
+     <script>
+        var MenuItems = document.getElementById("MenuItems");
+        MenuItems.style.maxHeight = "0px";
+        function menutoggle() {
+            if (MenuItems.style.maxHeight == "0px") {
+                MenuItems.style.maxHeight = "200px"
+            }
+            else {
+                MenuItems.style.maxHeight = "0px"
+            }
+        }
+    </script>
